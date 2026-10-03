@@ -1,0 +1,24 @@
+# Docker Compose for Jellyfin (official jellyfin/jellyfin image)
+#
+# See ./README.md for the walkthrough. Copy .env.example to .env and edit it.
+#
+# Every value has a default, so `docker compose up -d` works out of the box.
+# Override any of them by editing .env.
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:${JELLYFIN_VERSION:-10}   # 10 = latest 10.x release
+    container_name: jellyfin
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-Etc/UTC}          # IANA timezone, e.g. America/New_York
+      PUID: ${PUID:-1000}          # host user id so mounted media is accessible
+      PGID: ${PGID:-1000}          # host group id
+    volumes:
+      - ${JELLYFIN_CONFIG:-/var/lib/jellyfin}:/config      # settings, library DB
+      - ${JELLYFIN_CACHE:-/var/cache/jellyfin}:/cache      # transient cache
+      - ${MEDIA_DIR:-/media}:/media:ro                     # your media (read-only)
+      # Add more media libraries by repeating the mount line above, e.g.:
+      # - /path/to/tv:/tv:ro
+    ports:
+      - "${JELLYFIN_PORT:-8096}:8096/tcp"   # web UI / API
+      - "7359:7359/udp"                      # SSDP auto-discovery
