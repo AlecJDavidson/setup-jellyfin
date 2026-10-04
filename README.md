@@ -7,12 +7,6 @@ media and streams it to any client.
 - [Method 1: Docker Compose](docker-compose/) — containerized, easy to update and remove.
 - [Method 2: Ubuntu VM (native)](ubuntu-vm/) — installed into the OS, full hardware transcoding.
 
-## Jellyfin in one paragraph
-
-Jellyfin scans a folder of media (movies, TV, music), builds a rich library with artwork and
-metadata, and streams it on demand to phones, TVs, and browsers through any number of official
-clients. No accounts, no ads, completely free.
-
 ## Pick a method
 
 | | Docker Compose | Ubuntu VM (native) |
