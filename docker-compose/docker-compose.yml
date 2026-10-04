@@ -10,15 +10,15 @@ services:
     container_name: jellyfin
     restart: unless-stopped
     environment:
-      TZ: ${TZ:-Etc/UTC}          # IANA timezone, e.g. America/New_York
+      TZ: ${TZ:-Etc/UTC}           # timezone, e.g. America/Indianapolis
       PUID: ${PUID:-1000}          # host user id so mounted media is accessible
       PGID: ${PGID:-1000}          # host group id
     volumes:
       - ${JELLYFIN_CONFIG:-/var/lib/jellyfin}:/config      # settings, library DB
       - ${JELLYFIN_CACHE:-/var/cache/jellyfin}:/cache      # transient cache
       - ${MEDIA_DIR:-/media}:/media:ro                     # your media (read-only)
-      # Add more media libraries by repeating the mount line above, e.g.:
+      # Add more media libraries by repeating the mount line above, e.g.: I've set it to read only. You can delete the ":ro" if you want to be able to delete things from within the jellyfin UI
       # - /path/to/tv:/tv:ro
     ports:
       - "${JELLYFIN_PORT:-8096}:8096/tcp"   # web UI / API
-      - "7359:7359/udp"                      # SSDP auto-discovery
+      - "7359:7359/udp"                     # SSDP auto-discovery. You can turn this off if you don't need it.
